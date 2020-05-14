@@ -7,6 +7,7 @@ import {
   OneToMany,
 } from 'typeorm';
 import { ChatRecord } from 'src/chat-record/chat-record.entity';
+import { RoomJoinInfo } from 'src/chat-record/room-join-info.entity';
 
 @Entity()
 export class Room {
@@ -24,6 +25,12 @@ export class Room {
     chatRecord => chatRecord.room,
   )
   chatRecords: ChatRecord[];
+
+  @OneToMany(
+    () => RoomJoinInfo,
+    roomJoinInfo => roomJoinInfo.room,
+  )
+  roomJoinInfoList: RoomJoinInfo[];
 
   @CreateDateColumn()
   createDate: Date;

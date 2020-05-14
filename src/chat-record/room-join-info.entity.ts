@@ -1,22 +1,27 @@
 import {
   Entity,
-  PrimaryColumn,
   ManyToOne,
   JoinColumn,
   CreateDateColumn,
 } from 'typeorm';
 import { User } from 'src/user/user.entity';
-import { Room } from './room.entity';
+import { Room } from '../room/room.entity';
 
 @Entity()
 export class RoomJoinInfo {
-  @PrimaryColumn()
-  @ManyToOne(() => User)
+  @ManyToOne(
+    () => User,
+    user => user.roomJoinInfoList,
+    { primary: true },
+  )
   @JoinColumn({ name: 'userId' })
   user: User;
 
-  @PrimaryColumn()
-  @ManyToOne(() => Room)
+  @ManyToOne(
+    () => Room,
+    room => room.roomJoinInfoList,
+    { primary: true },
+  )
   @JoinColumn({ name: 'roomId' })
   room: Room;
 
