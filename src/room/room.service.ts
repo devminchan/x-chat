@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Room } from './room.entity';
 import { Repository } from 'typeorm';
+import { CreateRoomDto, UpdateRoomDto } from './room.dtos';
 
 @Injectable()
 export class RoomService {
@@ -15,5 +16,23 @@ export class RoomService {
 
   async getRoomById(id: number): Promise<Room> {
     return this.roomRepository.findOneOrFail({ id });
+  }
+
+  async createRoom(createRoomDto: CreateRoomDto): Promise<Room> {
+    const createdRoom = this.roomRepository.create({
+      ...createRoomDto,
+    });
+
+    return this.roomRepository.save(createdRoom);
+  }
+
+  async updateRoom(id: number, updateRoomDto: UpdateRoomDto): Promise<Room> {
+    const targetRoom = await this.roomRepository.findOneOrFail({ id });
+
+    if (updateRoomDto.roomTitle) targetRoom.roomTitle = updateRoomDto.roomTitle;
+    if (updateRoomDto.roomSubtitle)
+      targetRoom.roomSubtitle = updateRoomDto.roomSubtitle;
+
+    return this.roomRepository.save(targetRoom);
   }
 }

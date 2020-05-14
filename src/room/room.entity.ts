@@ -18,7 +18,7 @@ export class Room {
   roomTitle: string;
 
   @Column({ nullable: false })
-  roomSubTitle: string;
+  roomSubtitle: string;
 
   @OneToMany(
     () => ChatRecord,
