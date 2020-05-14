@@ -1,4 +1,12 @@
-import { Controller, Get, Param, Body, Post, Put } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Body,
+  Post,
+  Put,
+  Delete,
+} from '@nestjs/common';
 import { RoomService } from './room.service';
 import { CreateRoomDto, UpdateRoomDto } from './room.dtos';
 
@@ -27,5 +35,14 @@ export class RoomController {
     @Body() updateRoomDto: UpdateRoomDto,
   ) {
     return await this.roomService.updateRoom(id, updateRoomDto);
+  }
+
+  @Delete('/:id')
+  async deleteRoom(@Param('id') id: number) {
+    const result = await this.roomService.deleteRoom(id);
+
+    return {
+      success: result,
+    };
   }
 }

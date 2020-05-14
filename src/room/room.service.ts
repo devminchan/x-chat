@@ -35,4 +35,14 @@ export class RoomService {
 
     return this.roomRepository.save(targetRoom);
   }
+
+  async deleteRoom(id: number) {
+    const results = await this.roomRepository.delete(id);
+
+    if (results.affected > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
