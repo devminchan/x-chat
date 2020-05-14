@@ -13,10 +13,10 @@ export class Room {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ name: 'room_title', nullable: false })
+  @Column({ nullable: false })
   roomTitle: string;
 
-  @Column({ name: 'room_subtitle', nullable: false })
+  @Column({ nullable: false })
   roomSubTitle: string;
 
   @OneToMany(

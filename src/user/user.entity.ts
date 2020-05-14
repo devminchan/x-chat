@@ -13,8 +13,8 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ name: 'user_id', unique: true, nullable: false })
-  userId: string;
+  @Column({ unique: true, nullable: false })
+  loginUserId: string;
 
   @Column({ nullable: false })
   password: string;

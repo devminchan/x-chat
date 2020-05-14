@@ -4,6 +4,7 @@ import {
   ManyToOne,
   Column,
   CreateDateColumn,
+  JoinColumn,
 } from 'typeorm';
 import { Room } from 'src/room/room.entity';
 import { User } from 'src/user/user.entity';
@@ -21,9 +22,11 @@ export class ChatRecord {
     room => room.chatRecords,
     { nullable: false, onDelete: 'CASCADE' },
   )
+  @JoinColumn({ name: 'roomId' })
   room: Room;
 
   @ManyToOne(() => User, { nullable: true })
+  @JoinColumn({ name: 'userId' })
   user?: User;
 
   @CreateDateColumn()
