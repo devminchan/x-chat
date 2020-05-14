@@ -7,7 +7,7 @@ import {
   OneToMany,
 } from 'typeorm';
 import { ChatRecord } from 'src/chat-record/chat-record.entity';
-import { RoomJoinInfo } from 'src/chat-record/room-join-info.entity';
+import { RoomJoinInfo } from 'src/room-join-info/room-join-info.entity';
 
 @Entity()
 export class Room {
