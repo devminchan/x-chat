@@ -1,14 +1,17 @@
 import { Controller, Get, Param } from '@nestjs/common';
+import { RoomService } from './room.service';
 
 @Controller('rooms')
 export class RoomController {
+  constructor(private readonly roomService: RoomService) {}
+
   @Get()
-  getAllRooms() {
-    return 'all rooms';
+  async getAllRooms() {
+    return this.roomService.getAllRooms();
   }
 
   @Get('/:id')
-  getRoomById(@Param('id') id: number) {
-    return id;
+  async getRoomById(@Param('id') id: number) {
+    return this.roomService.getRoomById(id);
   }
 }
