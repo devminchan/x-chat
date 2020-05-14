@@ -4,7 +4,9 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
+import { ChatRecord } from 'src/chat-record/chat-record.entity';
 
 @Entity()
 export class User {
@@ -19,6 +21,12 @@ export class User {
 
   @Column({ length: 24, nullable: false })
   username: string;
+
+  @OneToMany(
+    () => ChatRecord,
+    chatRecord => chatRecord.user,
+  )
+  chatRecords: ChatRecord[];
 
   @CreateDateColumn()
   createDate: Date;
