@@ -34,4 +34,14 @@ export class UserService {
 
     return this.userRepository.save(targetUser);
   }
+
+  async deleteUser(id: number) {
+    const results = await this.userRepository.delete(id);
+
+    if (results.affected > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
