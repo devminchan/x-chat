@@ -10,5 +10,6 @@ import { RoomJoinInfoModule } from 'src/room-join-info/room-join-info.module';
   imports: [TypeOrmModule.forFeature([User]), RoomModule, RoomJoinInfoModule],
   controllers: [UserController],
   providers: [UserService],
+  exports: [UserService],
 })
 export class UserModule {}

@@ -7,9 +7,12 @@ import {
   Put,
   Delete,
   Patch,
+  UseGuards,
+  Request,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto, UpdateUserDto } from './user.dtos';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('users')
 export class UserController {
@@ -50,5 +53,11 @@ export class UserController {
   @Patch('/:id/join/:roomId')
   async joinRoom(@Param('id') userId: number, @Param('roomId') roomId: number) {
     return this.userService.joinRoom(userId, roomId);
+  }
+
+  @UseGuards(AuthGuard('local'))
+  @Post('/login')
+  async login(@Request() req) {
+    return req.user;
   }
 }

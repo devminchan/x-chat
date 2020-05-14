@@ -23,6 +23,10 @@ export class UserService {
     return this.userRepository.findOneOrFail({ id });
   }
 
+  async getUserByLoginUserId(loginUserId: string): Promise<User> | null {
+    return this.userRepository.findOne({ loginUserId }) ?? null;
+  }
+
   async createUser(createUserDto: CreateUserDto): Promise<User> {
     const createdUser = this.userRepository.create({
       ...createUserDto,
