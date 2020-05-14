@@ -6,6 +6,7 @@ import {
   Body,
   Put,
   Delete,
+  Patch,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto, UpdateUserDto } from './user.dtos';
@@ -44,5 +45,10 @@ export class UserController {
     return {
       success: result,
     };
+  }
+
+  @Patch('/:id/join/:roomId')
+  async joinRoom(@Param('id') userId: number, @Param('roomId') roomId: number) {
+    return this.userService.joinRoom(userId, roomId);
   }
 }

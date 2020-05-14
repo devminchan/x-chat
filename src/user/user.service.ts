@@ -3,11 +3,16 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './user.entity';
 import { Repository } from 'typeorm';
 import { CreateUserDto, UpdateUserDto } from './user.dtos';
+import { RoomService } from 'src/room/room.service';
+import { RoomJoinInfoService } from 'src/room-join-info/room-join-info.service';
+import { RoomJoinInfo } from 'src/room-join-info/room-join-info.entity';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
+    private readonly roomService: RoomService,
+    private readonly roomJoinInfoService: RoomJoinInfoService,
   ) {}
 
   async getAllUsers(): Promise<User[]> {
@@ -43,5 +48,12 @@ export class UserService {
     } else {
       return false;
     }
+  }
+
+  async joinRoom(userId: number, roomId: number): Promise<RoomJoinInfo> {
+    const user = await this.userRepository.findOneOrFail({ id: userId });
+    const room = await this.roomService.getRoomById(roomId);
+
+    return this.roomJoinInfoService.createRoomJoinInfo(user, room);
   }
 }

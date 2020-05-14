@@ -5,7 +5,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
 import { RoomModule } from './room/room.module';
 import { ChatRecordModule } from './chat-record/chat-record.module';
-import { RoomJoinInfoService } from './room-join-info/room-join-info.service';
 import { RoomJoinInfoModule } from './room-join-info/room-join-info.module';
 
 @Module({
@@ -17,6 +16,6 @@ import { RoomJoinInfoModule } from './room-join-info/room-join-info.module';
     RoomJoinInfoModule,
   ],
   controllers: [AppController],
-  providers: [AppService, RoomJoinInfoService],
+  providers: [AppService],
 })
 export class AppModule {}
