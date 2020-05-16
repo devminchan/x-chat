@@ -6,7 +6,7 @@ import { RoomModule } from './room/room.module';
 import { ChatRecordModule } from './chat-record/chat-record.module';
 import { RoomJoinInfoModule } from './room-join-info/room-join-info.module';
 import { AuthModule } from './auth/auth.module';
-import { ChatGateway } from './chat.gateway';
+import { ChatModule } from './chat/chat.module';
 
 @Module({
   imports: [
@@ -16,8 +16,8 @@ import { ChatGateway } from './chat.gateway';
     ChatRecordModule,
     RoomJoinInfoModule,
     AuthModule,
+    ChatModule,
   ],
   controllers: [AppController],
-  providers: [ChatGateway],
 })
 export class AppModule {}
