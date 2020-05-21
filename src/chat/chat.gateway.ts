@@ -13,6 +13,7 @@ export class ChatGateway {
     @MessageBody() data: string,
     @ConnectedSocket() client: Socket,
   ) {
+    console.log(`received message: ${data}`);
     client.broadcast.emit('message', data);
     client.emit('message', data);
   }
