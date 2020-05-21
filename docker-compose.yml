@@ -1,0 +1,47 @@
+version: "3"
+
+services:
+  db:
+    image: mysql:5.6.44
+    environment:
+      - MYSQL_DATABASE=x_chat
+      - MYSQL_USER=mysql_user
+      - MYSQL_PASSWORD=password
+      - MYSQL_ROOT_PASSWORD=1234
+    networks:
+      - x_chat_network
+    volumes:
+      - mysql-volume:/var/lib/mysql
+    ports: 
+      - "3306:3306"
+  redis:
+    image: redis:5.0-alpine
+    networks:
+      - x_chat_network
+  app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.dev
+    environment:
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_NAME=x_chat
+      - DB_USERNAME=root
+      - DB_PASSWORD=1234
+      - REDIS_HOST=redis
+    ports:
+      - "3000"
+    networks:
+      - x_chat_network
+    volumes: 
+      - ./:/home/app/
+  socketio-client-tool:
+    image: amritb/socketio-client-tool:latest
+    ports:
+      - "8080:8080"
+
+networks:
+  x_chat_network:
+
+volumes:
+  mysql-volume:
