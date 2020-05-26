@@ -7,7 +7,8 @@ import {
 } from '@nestjs/websockets';
 import { Socket, Server } from 'socket.io';
 import { JoinRoomDto } from './chat.dtos';
-import { UsePipes, ValidationPipe } from '@nestjs/common';
+import { UsePipes, ValidationPipe, UseGuards } from '@nestjs/common';
+import { WsJwtGuard } from 'src/auth/guards/ws-jwt.guard';
 
 @WebSocketGateway()
 export class ChatGateway {
@@ -24,6 +25,7 @@ export class ChatGateway {
     socket.emit('message', data);
   }
 
+  @UseGuards(WsJwtGuard)
   @UsePipes(new ValidationPipe())
   @SubscribeMessage('room:join')
   joinRoom(
