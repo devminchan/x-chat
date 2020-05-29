@@ -6,10 +6,13 @@ import {
   Post,
   Put,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { RoomService } from './room.service';
 import { CreateRoomDto, UpdateRoomDto } from './room.dtos';
+import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
 
+@UseGuards(JwtAuthGuard)
 @Controller('rooms')
 export class RoomController {
   constructor(private readonly roomService: RoomService) {}
