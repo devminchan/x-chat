@@ -35,6 +35,9 @@ export class User {
   )
   roomJoinInfoList: RoomJoinInfo[];
 
+  @Column({ default: false, nullable: false })
+  isAdmin: boolean;
+
   @CreateDateColumn()
   createDate: Date;
 

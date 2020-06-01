@@ -8,10 +8,12 @@ export interface LoginResponse {
 export interface JwtPayload {
   id: number;
   sub: string;
+  isAdmin: boolean;
 }
 
 export interface UserPrinciple {
   id: number;
+  isAdmin: boolean;
 }
 
 export interface LocalAuthRequest extends Request {

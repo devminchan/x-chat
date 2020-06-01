@@ -11,6 +11,7 @@ import {
 import { RoomService } from './room.service';
 import { CreateRoomDto, UpdateRoomDto } from './room.dtos';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
+import { AdminGuard } from 'src/auth/guards/admin.guard';
 
 @UseGuards(JwtAuthGuard)
 @Controller('rooms')
@@ -27,11 +28,13 @@ export class RoomController {
     return await this.roomService.getRoomById(id);
   }
 
+  @UseGuards(AdminGuard)
   @Post()
   async createRoom(@Body() createRoomDto: CreateRoomDto) {
     return await this.roomService.createRoom(createRoomDto);
   }
 
+  @UseGuards(AdminGuard)
   @Put('/:id')
   async updateRoom(
     @Param('id') id: number,
@@ -40,6 +43,7 @@ export class RoomController {
     return await this.roomService.updateRoom(id, updateRoomDto);
   }
 
+  @UseGuards(AdminGuard)
   @Delete('/:id')
   async deleteRoom(@Param('id') id: number) {
     const result = await this.roomService.deleteRoom(id);
