@@ -13,6 +13,11 @@ export class WsJwtGuard implements CanActivate {
     const client = context.switchToWs().getClient();
     const { token } = client.handshake.query;
 
+    // 이미 WsJwtGuard에 의해 인증받은 소켓이면 jwt 토큰 검사 생략
+    if (client.user) {
+      return Boolean(true);
+    }
+
     const pr = new Promise<JwtPayload>(resolve => {
       jwt.verify(token, JWT_CONSTANTS.secret, (err, payload: JwtPayload) => {
         if (err) {
@@ -26,7 +31,7 @@ export class WsJwtGuard implements CanActivate {
     try {
       const result = await pr;
 
-      context.switchToWs().getData().user = {
+      context.switchToWs().getClient().user = {
         id: result.id,
       } as UserPrinciple;
 

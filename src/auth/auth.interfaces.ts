@@ -1,5 +1,6 @@
 import { Request } from 'express';
 import { User } from 'src/user/user.entity';
+import { Socket } from 'socket.io';
 
 export interface LoginResponse {
   accessToken: string;
@@ -21,5 +22,9 @@ export interface LocalAuthRequest extends Request {
 }
 
 export interface PrincipleRequest extends Request {
+  user: UserPrinciple;
+}
+
+export interface PrincipleSocket extends Socket {
   user: UserPrinciple;
 }

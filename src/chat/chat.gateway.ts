@@ -9,12 +9,14 @@ import { Socket, Server } from 'socket.io';
 import { JoinRoomDto } from './chat.dtos';
 import { UsePipes, ValidationPipe, UseGuards } from '@nestjs/common';
 import { WsJwtGuard } from 'src/auth/guards/ws-jwt.guard';
+import { PrincipleSocket } from 'src/auth/auth.interfaces';
 
 @WebSocketGateway()
 export class ChatGateway {
   @WebSocketServer()
   server: Server;
 
+  @UseGuards(WsJwtGuard)
   @SubscribeMessage('message')
   handleMessage(
     @MessageBody() data: string,
@@ -30,10 +32,10 @@ export class ChatGateway {
   @SubscribeMessage('room:join')
   joinRoom(
     @MessageBody() joinRoomDto: JoinRoomDto,
-    @ConnectedSocket() socket: Socket,
+    @ConnectedSocket() socket: PrincipleSocket,
   ) {
-    console.log(`received message: `, joinRoomDto);
+    console.log('received message: ', joinRoomDto);
     socket.join(`r${joinRoomDto.roomId}`);
-    this.server.to(`r${joinRoomDto.roomId}`).emit('user:joined', socket.id);
+    this.server.to(`r${joinRoomDto.roomId}`).emit('user:joined', socket.user.id);
   }
 }
