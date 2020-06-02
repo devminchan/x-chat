@@ -6,7 +6,7 @@ import {
   UpdateDateColumn,
   OneToMany,
 } from 'typeorm';
-import { ChatRecord } from 'src/chat-record/chat-record.entity';
+import { ChatRecord } from 'src/chat/chat-record.entity';
 import { RoomJoinInfo } from 'src/room-join-info/room-join-info.entity';
 
 @Entity()
