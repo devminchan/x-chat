@@ -8,6 +8,7 @@ import {
   Delete,
   UseGuards,
   Req,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto, UpdateUserDto } from './user.dtos';
@@ -28,7 +29,7 @@ export class UserController {
 
   @UseGuards(JwtAuthGuard)
   @Get('/:id')
-  async getUserById(@Param('id') id: number) {
+  async getUserById(@Param('id', new ParseIntPipe()) id: number) {
     return await this.userService.getUserById(id);
   }
 

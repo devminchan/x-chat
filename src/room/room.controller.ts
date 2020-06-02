@@ -7,6 +7,7 @@ import {
   Put,
   Delete,
   UseGuards,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { RoomService } from './room.service';
 import { CreateRoomDto, UpdateRoomDto } from './room.dtos';
@@ -26,7 +27,7 @@ export class RoomController {
   }
 
   @Get('/:id')
-  async getRoomById(@Param('id') id: number) {
+  async getRoomById(@Param('id', new ParseIntPipe()) id: number) {
     return await this.roomService.getRoomById(id);
   }
 
@@ -39,7 +40,7 @@ export class RoomController {
   @UseGuards(AdminGuard)
   @Put('/:id')
   async updateRoom(
-    @Param('id') id: number,
+    @Param('id', new ParseIntPipe()) id: number,
     @Body() updateRoomDto: UpdateRoomDto,
   ) {
     return await this.roomService.updateRoom(id, updateRoomDto);
@@ -47,7 +48,7 @@ export class RoomController {
 
   @UseGuards(AdminGuard)
   @Delete('/:id')
-  async deleteRoom(@Param('id') id: number) {
+  async deleteRoom(@Param('id', new ParseIntPipe()) id: number) {
     const result = await this.roomService.deleteRoom(id);
 
     return {
