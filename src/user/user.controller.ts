@@ -14,19 +14,21 @@ import { UserService } from './user.service';
 import { CreateUserDto, UpdateUserDto } from './user.dtos';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
 import { PrincipleRequest } from 'src/auth/auth.interfaces';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 
 @ApiTags('users')
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Get()
   async getAllUsers() {
     return await this.userService.getAllUsers();
   }
 
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Get('/:id')
   async getUserById(@Param('id', new ParseIntPipe()) id: number) {
@@ -38,6 +40,7 @@ export class UserController {
     return await this.userService.createUser(createUserDto);
   }
 
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Put('/me')
   async updateUser(
@@ -48,6 +51,7 @@ export class UserController {
     return await this.userService.updateUser(id, updateUserDto);
   }
 
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Delete('/me')
   async deleteUser(@Req() req: PrincipleRequest) {
