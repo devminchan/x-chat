@@ -30,4 +30,14 @@ export class ChatService {
 
     return await this.chatRecordRepository.save(chatRecord);
   }
+
+  async getChatRecordsByRoomId(roomId: number): Promise<ChatRecord[]> {
+    const room = await this.roomService.getRoomById(roomId);
+
+    const results = await this.chatRecordRepository.find({
+      room,
+    });
+
+    return results;
+  }
 }
