@@ -2,7 +2,7 @@ import { Request } from 'express';
 import { User } from 'src/user/user.entity';
 import { Socket } from 'socket.io';
 
-export interface LoginResponse {
+export interface HasAccessToken {
   accessToken: string;
 }
 

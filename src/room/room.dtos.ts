@@ -1,5 +1,9 @@
 import { IsNotEmpty, IsOptional } from 'class-validator';
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import {
+  ApiProperty,
+  ApiPropertyOptional,
+  ApiResponseProperty,
+} from '@nestjs/swagger';
 
 export class CreateRoomDto {
   @ApiProperty()
@@ -19,4 +23,9 @@ export class UpdateRoomDto {
   @ApiPropertyOptional()
   @IsOptional()
   roomSubtitle?: string;
+}
+
+export class DeleteRoomResponse {
+  @ApiResponseProperty()
+  success: boolean;
 }

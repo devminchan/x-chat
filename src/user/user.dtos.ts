@@ -1,5 +1,9 @@
 import { IsNotEmpty, Length, IsOptional } from 'class-validator';
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import {
+  ApiProperty,
+  ApiPropertyOptional,
+  ApiResponseProperty,
+} from '@nestjs/swagger';
 
 export class CreateUserDto {
   @ApiProperty()
@@ -27,4 +31,9 @@ export class UpdateUserDto {
   @IsOptional()
   @Length(3, 24)
   username?: string;
+}
+
+export class DeleteUserResponse {
+  @ApiResponseProperty()
+  success: boolean;
 }

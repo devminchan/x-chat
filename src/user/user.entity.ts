@@ -8,18 +8,22 @@ import {
 } from 'typeorm';
 import { ChatRecord } from 'src/chat/chat-record.entity';
 import { RoomJoinInfo } from 'src/room-join-info/room-join-info.entity';
+import { ApiResponseProperty } from '@nestjs/swagger';
 
 @Entity()
 export class User {
+  @ApiResponseProperty()
   @PrimaryGeneratedColumn()
   id: number;
 
+  @ApiResponseProperty()
   @Column({ unique: true, nullable: false })
   loginUserId: string;
 
   @Column({ nullable: false })
   password: string;
 
+  @ApiResponseProperty()
   @Column({ length: 24, nullable: false })
   username: string;
 
@@ -35,12 +39,15 @@ export class User {
   )
   roomJoinInfoList: RoomJoinInfo[];
 
+  @ApiResponseProperty()
   @Column({ default: false, nullable: false })
   isAdmin: boolean;
 
+  @ApiResponseProperty()
   @CreateDateColumn()
   createDate: Date;
 
+  @ApiResponseProperty()
   @UpdateDateColumn()
   updateDate: Date;
 }
