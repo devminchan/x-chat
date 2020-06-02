@@ -6,12 +6,13 @@ import {
   Body,
   Put,
   Delete,
-  Patch,
   UseGuards,
+  Req,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto, UpdateUserDto } from './user.dtos';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
+import { PrincipleRequest } from 'src/auth/auth.interfaces';
 
 @Controller('users')
 export class UserController {
@@ -35,27 +36,22 @@ export class UserController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Put('/:id')
+  @Put('/me')
   async updateUser(
-    @Param('id') id: number,
+    @Req() req: PrincipleRequest,
     @Body() updateUserDto: UpdateUserDto,
   ) {
+    const { id } = req.user;
     return await this.userService.updateUser(id, updateUserDto);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Delete('/:id')
-  async deleteUser(@Param('id') id: number) {
-    const result = await this.userService.deleteUser(id);
+  @Delete('/me')
+  async deleteUser(@Req() req: PrincipleRequest) {
+    const result = await this.userService.deleteUser(req.user.id);
 
     return {
       success: result,
     };
-  }
-
-  @UseGuards(JwtAuthGuard)
-  @Patch('/:id/join/:roomId')
-  async joinRoom(@Param('id') userId: number, @Param('roomId') roomId: number) {
-    return this.userService.joinRoom(userId, roomId);
   }
 }
