@@ -32,11 +32,12 @@ export class ChatService {
   }
 
   async getChatRecordsByRoomId(roomId: number): Promise<ChatRecord[]> {
-    const room = await this.roomService.getRoomById(roomId);
-
-    const results = await this.chatRecordRepository.find({
-      room,
-    });
+    const results = await this.chatRecordRepository
+      .createQueryBuilder('c')
+      .leftJoinAndSelect('c.room', 'room')
+      .where('room.id = :roomId', { roomId })
+      .leftJoinAndSelect('c.user', 'user')
+      .getMany();
 
     return results;
   }

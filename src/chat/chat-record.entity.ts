@@ -20,6 +20,7 @@ export class ChatRecord {
   @Column()
   content: string;
 
+  @ApiResponseProperty({ type: () => Room })
   @ManyToOne(
     () => Room,
     room => room.chatRecords,
@@ -29,7 +30,7 @@ export class ChatRecord {
   room: Room;
 
   @ApiResponseProperty({ type: () => User })
-  @ManyToOne(() => User, { nullable: true })
+  @ManyToOne(() => User, { nullable: true, onDelete: 'SET NULL' })
   @JoinColumn({ name: 'userId' })
   user?: User;
 
