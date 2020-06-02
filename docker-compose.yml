@@ -26,7 +26,7 @@ services:
       - DB_PASSWORD=1234
       - REDIS_HOST=redis
     ports:
-      - "3000"
+      - "3000:3000"
     volumes: 
       - ./:/home/app/
   socketio-client-tool:
