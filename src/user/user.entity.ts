@@ -9,6 +9,7 @@ import {
 import { ChatRecord } from 'src/chat/chat-record.entity';
 import { RoomJoinInfo } from 'src/room-join-info/room-join-info.entity';
 import { ApiResponseProperty } from '@nestjs/swagger';
+import { Exclude } from 'class-transformer';
 
 @Entity()
 export class User {
@@ -20,6 +21,7 @@ export class User {
   @Column({ unique: true, nullable: false })
   loginUserId: string;
 
+  @Exclude()
   @Column({ nullable: false })
   password: string;
 
