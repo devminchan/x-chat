@@ -17,11 +17,15 @@ import {
 import { WsJwtGuard } from 'src/auth/guards/ws-jwt.guard';
 import { PrincipleSocket } from 'src/auth/auth.interfaces';
 import { ChatService } from './chat.service';
+import { UserService } from 'src/user/user.service';
 
 @UseGuards(WsJwtGuard)
 @WebSocketGateway()
 export class ChatGateway {
-  constructor(private readonly chatService: ChatService) {}
+  constructor(
+    private readonly chatService: ChatService,
+    private readonly userService: UserService,
+  ) {}
 
   @WebSocketServer()
   server: Server;
@@ -59,20 +63,23 @@ export class ChatGateway {
       message: data,
     });
 
-    this.server.to(`room ${roomId}`).emit('message', result.content);
+    this.server.to(`room ${roomId}`).emit('message', result);
   }
 
   @UsePipes(new ValidationPipe())
   @SubscribeMessage('room:join')
-  joinRoom(
+  async joinRoom(
     @MessageBody() joinRoomDto: JoinRoomDto,
     @ConnectedSocket() socket: PrincipleSocket,
   ) {
     // 다른 방 접속 시 기존 채팅방 socket 통신 끊기
     socket.leaveAll();
     socket.join(`room ${joinRoomDto.roomId}`);
+
+    const user = await this.userService.getUserById(socket.user.id);
+
     this.server
       .to(`room ${joinRoomDto.roomId}`)
-      .emit('user:joined', socket.user.id);
+      .emit('user:joined', user);
   }
 }
