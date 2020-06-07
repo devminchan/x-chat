@@ -8,9 +8,10 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
-  
+
   app.useGlobalPipes(new ValidationPipe());
   app.useWebSocketAdapter(new RedisIoAdapter(app));
+  app.enableCors();
 
   // swagger config
   const options = new DocumentBuilder()
