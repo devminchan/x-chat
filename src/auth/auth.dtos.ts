@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiResponseProperty } from '@nestjs/swagger';
 import { HasAccessToken } from './auth.interfaces';
 
 export class LoginRequest {
@@ -10,5 +10,6 @@ export class LoginRequest {
 }
 
 export class LoginResponse implements HasAccessToken {
+  @ApiResponseProperty()
   accessToken: string;
 }
