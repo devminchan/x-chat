@@ -37,6 +37,16 @@ export class UserController {
   })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
+  @Get('/me')
+  async getMyInfo(@Req() request: PrincipleRequest): Promise<User> {
+    return await this.userService.getUserById(request.user.id);
+  }
+
+  @ApiResponse({
+    type: User,
+  })
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @Get('/:id')
   async getUserById(
     @Param('id', new ParseIntPipe()) id: number,
