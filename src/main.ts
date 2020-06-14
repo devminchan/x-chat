@@ -7,10 +7,12 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  // Request Validation
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
-
   app.useGlobalPipes(new ValidationPipe());
+
   app.useWebSocketAdapter(new RedisIoAdapter(app));
+  // CORS 요청 허용
   app.enableCors();
 
   // swagger config
@@ -26,4 +28,5 @@ async function bootstrap() {
 
   await app.listen(3000);
 }
+
 bootstrap();
