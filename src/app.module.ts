@@ -21,6 +21,9 @@ import { HttpLogger } from './utils/HttpLogger';
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(HttpLogger).forRoutes('/*');
+    consumer
+      .apply(HttpLogger)
+      .exclude('/') // exclude for health check request
+      .forRoutes('/*');
   }
 }

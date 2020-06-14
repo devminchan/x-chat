@@ -7,7 +7,7 @@ export class HttpLogger implements NestMiddleware {
 
   use(req: Request, res: Response, next: Function) {
     const logDesc = `${req.method} ${req.originalUrl} from ${req.ip}`;
-    this.logger.log(`[REQUEST] ${logDesc}`);
+    this.logger.log(`REQUEST - ${logDesc}`);
 
     if (req.method !== 'GET') {
       this.logger.log(req.body);
