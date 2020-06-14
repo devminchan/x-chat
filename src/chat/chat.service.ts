@@ -37,6 +37,7 @@ export class ChatService {
       .leftJoinAndSelect('c.room', 'room')
       .where('room.id = :roomId', { roomId })
       .leftJoinAndSelect('c.user', 'user')
+      .orderBy('c.createDate', 'ASC')
       .getMany();
 
     return results;
